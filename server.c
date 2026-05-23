@@ -27,7 +27,7 @@ int main(int argc , char *argv[]){
 	if(sockfd < 0){error("failure to open socket. \n");}
 
 	//pointer,size
-	bzero((char *)&server_addr, sizeof(server_addr)); //as the serv_addr may initially be filled with random form the old stack bzero would initialize it to 0; as sometimes while i initialize after the random garbage values causes error
+	memset(&server_addr, 0, sizeof(server_addr)); //earlier days now outdated bzero((char *)&server_addr, sizeof(server_addr));
 
 	portno = atoi(argv[1]);
 	server_addr.sin_family = AF_INET;
@@ -47,7 +47,7 @@ int main(int argc , char *argv[]){
 
 	while(1){
 
-		bzero(buffer, 255);
+		memset(buffer, 0, 255);
 		n = read(newsockfd, buffer, 255);
 		if(n<0){error("reading failed \n");}
 

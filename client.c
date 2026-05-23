@@ -29,9 +29,10 @@ int main(int argc , char *argv[]){
 	server = gethostbyname(argv[1]);
 	if(server == NULL){fprintf(stderr, "no such hosts \n");}
 
-	bzero((char *)&server_addr, sizeof(server_addr));	
+	memset(&server_addr, 0, sizeof(server_addr)); //earlier days now outdated bzero((char *)&server_addr, sizeof(server_addr));
+
 	server_addr.sin_family = AF_INET;
-	memcpy(&server_addr.sin_addr.s_addr,
+	memcpy(&server_addr.sin_addr.s_addr,   //i needed the bianry form of the IP string and i did the memcpy
        server->h_addr_list[0],
        server->h_length);
 	server_addr.sin_port = htons(portno);
@@ -40,7 +41,7 @@ int main(int argc , char *argv[]){
 
 	while(1){
 
-		bzero(buffer, 255);
+		memset(buffer,0,255);
 		fgets(buffer, 255, stdin);
 		n = write(sockfd, buffer, strlen(buffer));
 		if(n<0){error("failed to write \n");}
