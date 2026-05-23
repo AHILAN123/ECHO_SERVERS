@@ -12,7 +12,7 @@ void* myturn(void *arg){
         printf("MY TURN %d %d \n",i+1, *iptr);
         (*iptr)++;
     }
-    return *iptr;
+    return iptr;
 }
 void yourturn(){
     for(int i=0;i<3;i++){
@@ -27,6 +27,6 @@ int main(){
     int *result;
     pthread_create(&tid, NULL, myturn, NULL);
     yourturn();
-    pthread_join(tid, &result);
+    pthread_join(tid, (void *)&result);
     return 0;
 }
